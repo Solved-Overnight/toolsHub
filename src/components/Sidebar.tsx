@@ -46,7 +46,7 @@ export function Sidebar({ onCollapse, isCollapsed }: SidebarProps) {
       <div className="flex items-center justify-center p-4">
         <div className={cn("flex items-center space-x-2", isCollapsed && "justify-center")}>
           <Beaker className="h-8 w-8 text-accent-primary" />
-          {!isCollapsed && <span className="text-xl font-semibold">DyeCalc</span>}
+          {!isCollapsed && <span className="text-xl font-semibold">Solved Overnight</span>}
         </div>
       </div>
 
