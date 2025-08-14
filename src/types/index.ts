@@ -30,7 +30,7 @@ export interface DyeingFormData {
 }
 
 export interface ChemicalItem {
-  itemType: 'Chemical' | 'Dyes' | '';
+  itemType: 'Chemical' | 'Dyes' | 'Dyeing step' | '';
   itemName: string;
   lotNo: string;
   dosing: number | null;
@@ -62,7 +62,7 @@ export interface Recipe {
 
 export const DYEING_TYPES = ['Regular', 'Sample', 'Bulk'] as const;
 export const COLOR_GROUPS = ['Light', 'Medium', 'Dark'] as const;
-export const ITEM_TYPES = ['Chemical', 'Dyes'] as const;
+export const ITEM_TYPES = ['Chemical', 'Dyes', 'Dyeing step'] as const;
 
 export const calculateTotalWater = (fabricWeight: number | null, liquorRatio: number | null): number | null => {
   if (fabricWeight === null || liquorRatio === null || isNaN(fabricWeight) || isNaN(liquorRatio)) {

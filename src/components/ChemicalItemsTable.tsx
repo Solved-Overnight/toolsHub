@@ -43,6 +43,29 @@ export const ChemicalItemsTable: React.FC<ChemicalItemsTableProps> = ({
     const newItems = [...items];
     const currentItem = { ...newItems[index] };
 
+    // Handle Dyeing step special case
+    if (field === 'itemType' && value === 'Dyeing step') {
+      currentItem.itemType = value;
+      currentItem.itemName = '-------';
+      currentItem.lotNo = '-------';
+      currentItem.dosing = null;
+      currentItem.shade = null;
+      currentItem.qty = { kg: null, gm: null, mg: null };
+      currentItem.unitPrice = null;
+      currentItem.costing = 0;
+      currentItem.remarks = '-------';
+    } else if (field === 'itemType' && currentItem.itemType === 'Dyeing step' && value !== 'Dyeing step') {
+      // Reset values when changing from Dyeing step to another type
+      currentItem.itemType = value;
+      currentItem.itemName = '';
+      currentItem.lotNo = '';
+      currentItem.dosing = null;
+      currentItem.shade = null;
+      currentItem.qty = { kg: null, gm: null, mg: null };
+      currentItem.unitPrice = null;
+      currentItem.costing = 0;
+      currentItem.remarks = '';
+    } else if (field === 'highlight') {
     if (field === 'highlight') {
       currentItem.highlight = value as boolean;
     } else if (field === 'dosing') {
@@ -136,18 +159,18 @@ export const ChemicalItemsTable: React.FC<ChemicalItemsTableProps> = ({
       <div className="overflow-x-auto">
         <table className="min-w-full border-collapse border border-slate-200 table-fixed"> {/* Added table-fixed */}
           <colgroup>
-            <col style={{ width: '10%' }} /> {/* Item Type */}
-            <col style={{ width: '20%' }} /> {/* Item Name - Increased width */}
+            <col style={{ width: '12%' }} /> {/* Item Type */}
+            <col style={{ width: '25%' }} /> {/* Item Name - Further increased width */}
             <col style={{ width: '10%' }} /> {/* Lot No */}
             <col style={{ width: '8%' }} />  {/* Dosing */}
             <col style={{ width: '8%' }} />  {/* Shade */}
-            <col style={{ width: '6%' }} />  {/* Qty kg */}
-            <col style={{ width: '6%' }} />  {/* Qty gm */}
-            <col style={{ width: '6%' }} />  {/* Qty mg */}
+            <col style={{ width: '5%' }} />  {/* Qty kg - Reduced width */}
+            <col style={{ width: '5%' }} />  {/* Qty gm - Reduced width */}
+            <col style={{ width: '5%' }} />  {/* Qty mg - Reduced width */}
             <col style={{ width: '8%' }} />  {/* Unit Price */}
             <col style={{ width: '8%' }} />  {/* Costing */}
-            <col style={{ width: '10%' }} /> {/* Remarks */}
-            <col style={{ width: '10%' }} /> {/* Actions */}
+            <col style={{ width: '8%' }} />  {/* Remarks - Reduced width */}
+            <col style={{ width: '8%' }} />  {/* Actions - Reduced width */}
           </colgroup>
           <thead className="bg-slate-50">
             <tr>
@@ -213,8 +236,9 @@ export const ChemicalItemsTable: React.FC<ChemicalItemsTableProps> = ({
                             type="text"
                             value={item.itemName}
                             onChange={(e) => updateItem(index, 'itemName', e.target.value)}
-                            className="w-full border-0 bg-transparent focus:ring-0 p-0 text-center text-sm"
+                            className={`w-full border-0 bg-transparent focus:ring-0 p-0 text-center text-sm ${item.itemType === 'Dyeing step' ? 'text-gray-500' : ''}`}
                             placeholder="Name"
+                            readOnly={item.itemType === 'Dyeing step'}
                           />
                         </td>
                         <td className="border border-slate-200 px-2 py-1.5 whitespace-nowrap text-center">
@@ -222,8 +246,9 @@ export const ChemicalItemsTable: React.FC<ChemicalItemsTableProps> = ({
                             type="text"
                             value={item.lotNo}
                             onChange={(e) => updateItem(index, 'lotNo', e.target.value)}
-                            className="w-full border-0 bg-transparent focus:ring-0 p-0 text-center text-sm"
+                            className={`w-full border-0 bg-transparent focus:ring-0 p-0 text-center text-sm ${item.itemType === 'Dyeing step' ? 'text-gray-500' : ''}`}
                             placeholder="Lot #"
+                            readOnly={item.itemType === 'Dyeing step'}
                           />
                         </td>
                         {/* Reduced padding */}
@@ -236,7 +261,7 @@ export const ChemicalItemsTable: React.FC<ChemicalItemsTableProps> = ({
                             placeholder="g/l"
                             min="0"
                             step="any"
-                            disabled={item.shade !== null && item.shade !== undefined && String(item.shade).trim() !== ''}
+                            disabled={item.itemType === 'Dyeing step' || (item.shade !== null && item.shade !== undefined && String(item.shade).trim() !== '')}
                           />
                         </td>
                         {/* Reduced padding */}
@@ -249,7 +274,7 @@ export const ChemicalItemsTable: React.FC<ChemicalItemsTableProps> = ({
                             placeholder="%"
                             min="0"
                             step="any"
-                            disabled={item.dosing !== null && item.dosing !== undefined && String(item.dosing).trim() !== ''}
+                            disabled={item.itemType === 'Dyeing step' || (item.dosing !== null && item.dosing !== undefined && String(item.dosing).trim() !== '')}
                           />
                         </td>
                         <td className="border border-slate-200 px-0.5 py-1.5 whitespace-nowrap text-center">
@@ -286,6 +311,7 @@ export const ChemicalItemsTable: React.FC<ChemicalItemsTableProps> = ({
                             placeholder="Price"
                             min="0"
                             step="any"
+                            disabled={item.itemType === 'Dyeing step'}
                           />
                         </td>
                         {/* Reduced padding */}
@@ -302,8 +328,9 @@ export const ChemicalItemsTable: React.FC<ChemicalItemsTableProps> = ({
                             type="text"
                             value={item.remarks}
                             onChange={(e) => updateItem(index, 'remarks', e.target.value)}
-                            className="w-full border-0 bg-transparent focus:ring-0 p-0 text-center text-sm"
+                            className={`w-full border-0 bg-transparent focus:ring-0 p-0 text-center text-sm ${item.itemType === 'Dyeing step' ? 'text-gray-500' : ''}`}
                             placeholder="Remarks"
+                            readOnly={item.itemType === 'Dyeing step'}
                           />
                         </td>
                         <td className="border border-slate-200 px-2 py-1.5 whitespace-nowrap text-center align-middle">

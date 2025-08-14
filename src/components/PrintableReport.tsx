@@ -125,16 +125,16 @@ export const PrintableReport = React.forwardRef<HTMLDivElement, PrintableReportP
           {/* Chemical Items Table */}
           <table className={`w-full border-collapse ${borderStyle} mb-4`}> {/* Apply border style */}
             <colgroup>
-              <col style={{ width: '10%' }} /> {/* Item Type */}
-              <col style={{ width: '15%' }} /> {/* Item Name */}
+              <col style={{ width: '12%' }} /> {/* Item Type */}
+              <col style={{ width: '20%' }} /> {/* Item Name - Increased width */}
               <col style={{ width: '10%' }} /> {/* Lot No */}
               <col style={{ width: '10%' }} /> {/* Dosing */}
               <col style={{ width: '10%' }} /> {/* Shade */}
-              <col style={{ width: '8%' }} />  {/* Qty kg */}
-              <col style={{ width: '8%' }} />  {/* Qty gm */}
-              <col style={{ width: '8%' }} />  {/* Qty mg */}
-              <col style={{ width: '10%' }} /> {/* Unit Price */}
-              <col style={{ width: '11%' }} /> {/* Costing */}
+              <col style={{ width: '6%' }} />  {/* Qty kg - Reduced width */}
+              <col style={{ width: '6%' }} />  {/* Qty gm - Reduced width */}
+              <col style={{ width: '6%' }} />  {/* Qty mg - Reduced width */}
+              <col style={{ width: '8%' }} />  {/* Unit Price - Reduced width */}
+              <col style={{ width: '10%' }} /> {/* Costing - Reduced width */}
             </colgroup>
             <thead>
               <tr className="bg-gray-100">
