@@ -235,9 +235,8 @@ export const ChemicalItemsTable: React.FC<ChemicalItemsTableProps> = ({
                             type="text"
                             value={item.itemName}
                             onChange={(e) => updateItem(index, 'itemName', e.target.value)}
-                            className={`w-full border-0 bg-transparent focus:ring-0 p-0 text-center text-sm ${item.itemType === 'Dyeing step' ? 'text-gray-500' : ''}`}
+                            className="w-full border-0 bg-transparent focus:ring-0 p-0 text-center text-sm"
                             placeholder="Name"
-                            readOnly={item.itemType === 'Dyeing step'}
                           />
                         </td>
                         <td className="border border-slate-200 px-2 py-1.5 whitespace-nowrap text-center">
@@ -245,9 +244,8 @@ export const ChemicalItemsTable: React.FC<ChemicalItemsTableProps> = ({
                             type="text"
                             value={item.lotNo}
                             onChange={(e) => updateItem(index, 'lotNo', e.target.value)}
-                            className={`w-full border-0 bg-transparent focus:ring-0 p-0 text-center text-sm ${item.itemType === 'Dyeing step' ? 'text-gray-500' : ''}`}
+                            className="w-full border-0 bg-transparent focus:ring-0 p-0 text-center text-sm"
                             placeholder="Lot #"
-                            readOnly={item.itemType === 'Dyeing step'}
                           />
                         </td>
                         {/* Reduced padding */}
@@ -260,7 +258,7 @@ export const ChemicalItemsTable: React.FC<ChemicalItemsTableProps> = ({
                             placeholder="g/l"
                             min="0"
                             step="any"
-                            disabled={item.itemType === 'Dyeing step' || (item.shade !== null && item.shade !== undefined && String(item.shade).trim() !== '')}
+                            disabled={item.shade !== null && item.shade !== undefined && String(item.shade).trim() !== ''}
                           />
                         </td>
                         {/* Reduced padding */}
@@ -273,7 +271,7 @@ export const ChemicalItemsTable: React.FC<ChemicalItemsTableProps> = ({
                             placeholder="%"
                             min="0"
                             step="any"
-                            disabled={item.itemType === 'Dyeing step' || (item.dosing !== null && item.dosing !== undefined && String(item.dosing).trim() !== '')}
+                            disabled={item.dosing !== null && item.dosing !== undefined && String(item.dosing).trim() !== ''}
                           />
                         </td>
                         <td className="border border-slate-200 px-0.5 py-1.5 whitespace-nowrap text-center">
@@ -310,7 +308,6 @@ export const ChemicalItemsTable: React.FC<ChemicalItemsTableProps> = ({
                             placeholder="Price"
                             min="0"
                             step="any"
-                            disabled={item.itemType === 'Dyeing step'}
                           />
                         </td>
                         {/* Reduced padding */}
@@ -327,9 +324,8 @@ export const ChemicalItemsTable: React.FC<ChemicalItemsTableProps> = ({
                             type="text"
                             value={item.remarks}
                             onChange={(e) => updateItem(index, 'remarks', e.target.value)}
-                            className={`w-full border-0 bg-transparent focus:ring-0 p-0 text-center text-sm ${item.itemType === 'Dyeing step' ? 'text-gray-500' : ''}`}
+                            className="w-full border-0 bg-transparent focus:ring-0 p-0 text-center text-sm"
                             placeholder="Remarks"
-                            readOnly={item.itemType === 'Dyeing step'}
                           />
                         </td>
                         <td className="border border-slate-200 px-2 py-1.5 whitespace-nowrap text-center align-middle">
