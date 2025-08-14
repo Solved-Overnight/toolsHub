@@ -66,7 +66,6 @@ export const ChemicalItemsTable: React.FC<ChemicalItemsTableProps> = ({
       currentItem.costing = 0;
       currentItem.remarks = '';
     } else if (field === 'highlight') {
-    if (field === 'highlight') {
       currentItem.highlight = value as boolean;
     } else if (field === 'dosing') {
       const dosing = value === '' ? null : !isNaN(Number(value)) ? Number(value) : currentItem.dosing;
