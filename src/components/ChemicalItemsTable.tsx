@@ -48,10 +48,10 @@ export const ChemicalItemsTable: React.FC<ChemicalItemsTableProps> = ({
       currentItem.itemType = value;
       currentItem.itemName = '-------';
       currentItem.lotNo = '-------';
-      currentItem.dosing = null;
-      currentItem.shade = null;
-      currentItem.qty = { kg: null, gm: null, mg: null };
-      currentItem.unitPrice = null;
+      currentItem.dosing = 0; // Set to 0 instead of null to show '-------' effect
+      currentItem.shade = 0; // Set to 0 instead of null to show '-------' effect
+      currentItem.qty = { kg: 0, gm: 0, mg: 0 }; // Set to 0 values
+      currentItem.unitPrice = 0; // Set to 0 instead of null
       currentItem.costing = 0;
       currentItem.remarks = '-------';
     } else if (field === 'itemType' && currentItem.itemType === 'Dyeing step' && value !== 'Dyeing step') {
@@ -254,9 +254,9 @@ export const ChemicalItemsTable: React.FC<ChemicalItemsTableProps> = ({
                         <td className="border border-slate-200 px-1 py-1.5 whitespace-nowrap text-center">
                           <input
                             type="number"
-                            value={item.dosing ?? ''}
+                            value={item.itemType === 'Dyeing step' ? '-------' : (item.dosing ?? '')}
                             onChange={(e) => updateItem(index, 'dosing', e.target.value)}
-                            className="w-full border-0 bg-transparent focus:ring-0 p-0 text-center text-sm"
+                            className={`w-full border-0 bg-transparent focus:ring-0 p-0 text-center text-sm ${item.itemType === 'Dyeing step' ? 'text-gray-500' : ''}`}
                             placeholder="g/l"
                             min="0"
                             step="any"
@@ -267,9 +267,9 @@ export const ChemicalItemsTable: React.FC<ChemicalItemsTableProps> = ({
                         <td className="border border-slate-200 px-1 py-1.5 whitespace-nowrap text-center">
                           <input
                             type="number"
-                            value={item.shade ?? ''}
+                            value={item.itemType === 'Dyeing step' ? '-------' : (item.shade ?? '')}
                             onChange={(e) => updateItem(index, 'shade', e.target.value)}
-                            className="w-full border-0 bg-transparent focus:ring-0 p-0 text-center text-sm"
+                            className={`w-full border-0 bg-transparent focus:ring-0 p-0 text-center text-sm ${item.itemType === 'Dyeing step' ? 'text-gray-500' : ''}`}
                             placeholder="%"
                             min="0"
                             step="any"
@@ -279,46 +279,47 @@ export const ChemicalItemsTable: React.FC<ChemicalItemsTableProps> = ({
                         <td className="border border-slate-200 px-0.5 py-1.5 whitespace-nowrap text-center">
                           <input
                             type="text"
-                            value={item.qty.kg !== null ? item.qty.kg.toFixed(0) : ''}
+                            value={item.itemType === 'Dyeing step' ? '-------' : (item.qty.kg !== null ? item.qty.kg.toFixed(0) : '')}
                             readOnly
-                            className="w-full border-0 bg-transparent focus:ring-0 text-slate-500 text-center p-0 text-sm"
+                            className={`w-full border-0 bg-transparent focus:ring-0 text-center p-0 text-sm ${item.itemType === 'Dyeing step' ? 'text-gray-500' : 'text-slate-500'}`}
                           />
                         </td>
                         <td className="border border-slate-200 px-0.5 py-1.5 whitespace-nowrap text-center">
                           <input
                             type="text"
-                            value={item.qty.gm !== null ? item.qty.gm.toFixed(0) : ''}
+                            value={item.itemType === 'Dyeing step' ? '-------' : (item.qty.gm !== null ? item.qty.gm.toFixed(0) : '')}
                             readOnly
-                            className="w-full border-0 bg-transparent focus:ring-0 text-slate-500 text-center p-0 text-sm"
+                            className={`w-full border-0 bg-transparent focus:ring-0 text-center p-0 text-sm ${item.itemType === 'Dyeing step' ? 'text-gray-500' : 'text-slate-500'}`}
                           />
                         </td>
                         <td className="border border-slate-200 px-0.5 py-1.5 whitespace-nowrap text-center">
                           <input
                             type="text"
-                            value={item.qty.mg !== null ? item.qty.mg.toFixed(0) : ''}
+                            value={item.itemType === 'Dyeing step' ? '-------' : (item.qty.mg !== null ? item.qty.mg.toFixed(0) : '')}
                             readOnly
-                            className="w-full border-0 bg-transparent focus:ring-0 text-slate-500 text-center p-0 text-sm"
+                            className={`w-full border-0 bg-transparent focus:ring-0 text-center p-0 text-sm ${item.itemType === 'Dyeing step' ? 'text-gray-500' : 'text-slate-500'}`}
                           />
                         </td>
                         {/* Reduced padding */}
                         <td className="border border-slate-200 px-1 py-1.5 whitespace-nowrap text-center">
                           <input
                             type="number"
-                            value={item.unitPrice ?? ''}
+                            value={item.itemType === 'Dyeing step' ? '-------' : (item.unitPrice ?? '')}
                             onChange={(e) => updateItem(index, 'unitPrice', e.target.value)}
-                            className="w-full border-0 bg-transparent focus:ring-0 p-0 text-center text-sm"
+                            className={`w-full border-0 bg-transparent focus:ring-0 p-0 text-center text-sm ${item.itemType === 'Dyeing step' ? 'text-gray-500' : ''}`}
                             placeholder="Price"
                             min="0"
                             step="any"
+                            disabled={item.itemType === 'Dyeing step'}
                           />
                         </td>
                         {/* Reduced padding */}
                         <td className="border border-slate-200 px-1 py-1.5 whitespace-nowrap text-center">
                           <input
                             type="text"
-                            value={item.costing.toFixed(2)}
+                            value={item.itemType === 'Dyeing step' ? '-------' : item.costing.toFixed(2)}
                             readOnly
-                            className="w-full border-0 bg-transparent focus:ring-0 text-slate-500 text-center p-0 text-sm"
+                            className={`w-full border-0 bg-transparent focus:ring-0 text-center p-0 text-sm ${item.itemType === 'Dyeing step' ? 'text-gray-500' : 'text-slate-500'}`}
                           />
                         </td>
                         <td className="border border-slate-200 px-2 py-1.5 whitespace-nowrap text-center">
@@ -326,8 +327,9 @@ export const ChemicalItemsTable: React.FC<ChemicalItemsTableProps> = ({
                             type="text"
                             value={item.remarks}
                             onChange={(e) => updateItem(index, 'remarks', e.target.value)}
-                            className="w-full border-0 bg-transparent focus:ring-0 p-0 text-center text-sm"
+                            className={`w-full border-0 bg-transparent focus:ring-0 p-0 text-center text-sm ${item.itemType === 'Dyeing step' ? 'text-gray-500' : ''}`}
                             placeholder="Remarks"
+                            readOnly={item.itemType === 'Dyeing step'}
                           />
                         </td>
                         <td className="border border-slate-200 px-2 py-1.5 whitespace-nowrap text-center align-middle">
