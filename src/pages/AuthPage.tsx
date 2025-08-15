@@ -16,9 +16,9 @@ export function AuthPage() {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const images = [
-    'https://images.unsplash.com/photo-1544965232-1b8a4b58938b?q=80&w=1974&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1523289316482-0076c72c13b2?q=80&w=2070&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1603400528246-73e0a3a7a514?q=80&w=1974&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1718049942873-58bd663206dc?q=80&w=1167&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D?q=80&w=1974&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1524292332709-b33366a7f165?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D?q=80&w=2070&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1655122878062-a9e885391a1b?q=80&w=1776&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D?q=80&w=1974&auto=format&fit=crop',
   ];
 
   useEffect(() => {
