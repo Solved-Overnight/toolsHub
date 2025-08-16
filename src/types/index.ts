@@ -29,6 +29,7 @@ export interface DyeingFormData {
   liquorRatio: number | null;
   totalWater: number | null;
   composition: string;
+  documentMode: 'draft' | 'final';
 }
 
 export interface OldDyeingFormData {
@@ -106,7 +107,8 @@ export const initialDyeingFormData: DyeingFormData = {
   fabricWeight: null,
   liquorRatio: null,
   totalWater: null,
-  composition: ''
+  composition: '',
+  documentMode: 'draft'
 };
 
 export const initialOldDyeingFormData: OldDyeingFormData = {

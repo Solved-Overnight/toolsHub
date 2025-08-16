@@ -28,14 +28,16 @@ export function DyeingForm({ data, onChange }: DyeingFormProps) {
   };
 
   // Common input classes
-  const inputClasses = "mt-1 block w-full rounded-md border-border shadow-sm focus:border-primary focus:ring-primary bg-background text-foreground py-1 px-3";
+  const inputClasses = "mt-1 block w-full rounded-lg border-2 border-gray-200 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 bg-white text-gray-900 py-2.5 px-4 transition-all duration-200 hover:border-gray-300";
+  const selectClasses = "mt-1 block w-full rounded-lg border-2 border-gray-200 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 bg-white text-gray-900 py-2.5 px-4 transition-all duration-200 hover:border-gray-300 appearance-none";
+  const labelClasses = "block text-sm font-semibold text-gray-700 mb-1";
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       {/* Column 1 */}
       <div className="space-y-4">
         <div>
-          <label className="block text-sm font-medium text-foreground">Project</label>
+          <label className={labelClasses}>Project</label>
           <input
             type="text"
             value={data.project}
@@ -44,7 +46,7 @@ export function DyeingForm({ data, onChange }: DyeingFormProps) {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-foreground">Fabric Type</label>
+          <label className={labelClasses}>Fabric Type</label>
           <input
             type="text"
             value={data.fabricType}
@@ -53,7 +55,7 @@ export function DyeingForm({ data, onChange }: DyeingFormProps) {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-foreground">Color</label>
+          <label className={labelClasses}>Color</label>
           <input
             type="text"
             value={data.color}
@@ -62,7 +64,7 @@ export function DyeingForm({ data, onChange }: DyeingFormProps) {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-foreground">Lab Dip No.</label>
+          <label className={labelClasses}>Lab Dip No.</label>
           <input
             type="text"
             value={data.labDipNo}
@@ -75,7 +77,7 @@ export function DyeingForm({ data, onChange }: DyeingFormProps) {
       {/* Column 2 */}
       <div className="space-y-4">
         <div>
-          <label className="block text-sm font-medium text-foreground">Batch No.</label>
+          <label className={labelClasses}>Batch No.</label>
           <input
             type="text"
             value={data.batchNo}
@@ -84,7 +86,7 @@ export function DyeingForm({ data, onChange }: DyeingFormProps) {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-foreground">Buyer</label>
+          <label className={labelClasses}>Buyer</label>
           <input
             type="text"
             value={data.buyer}
@@ -93,7 +95,7 @@ export function DyeingForm({ data, onChange }: DyeingFormProps) {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-foreground">F/GSM</label>
+          <label className={labelClasses}>F/GSM</label>
           <input
             type="text"
             value={data.gsm}
@@ -102,7 +104,7 @@ export function DyeingForm({ data, onChange }: DyeingFormProps) {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-foreground">Machine No.</label>
+          <label className={labelClasses}>Machine No.</label>
           <input
             type="text"
             value={data.machineNo}
@@ -115,7 +117,7 @@ export function DyeingForm({ data, onChange }: DyeingFormProps) {
       {/* Column 3 */}
       <div className="space-y-4">
         <div>
-          <label className="block text-sm font-medium text-foreground">Date</label>
+          <label className={labelClasses}>Date</label>
           <input
             type="date"
             value={data.reqDate}
@@ -124,11 +126,11 @@ export function DyeingForm({ data, onChange }: DyeingFormProps) {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-foreground">Dying Type</label>
+          <label className={labelClasses}>Dying Type</label>
           <select
             value={data.dyingType}
             onChange={(e) => handleChange('dyingType', e.target.value)}
-            className={inputClasses}
+            className={selectClasses}
           >
             <option value="">Select Type</option>
             {DYEING_TYPES.map(type => (
@@ -137,11 +139,11 @@ export function DyeingForm({ data, onChange }: DyeingFormProps) {
           </select>
         </div>
         <div>
-          <label className="block text-sm font-medium text-foreground">Color Group</label>
+          <label className={labelClasses}>Color Group</label>
           <select
             value={data.colorGroup}
             onChange={(e) => handleChange('colorGroup', e.target.value)}
-            className={inputClasses}
+            className={selectClasses}
           >
             <option value="">Select Group</option>
             {COLOR_GROUPS.map(group => (
@@ -150,7 +152,7 @@ export function DyeingForm({ data, onChange }: DyeingFormProps) {
           </select>
         </div>
         <div>
-          <label className="block text-sm font-medium text-foreground">Composition</label>
+          <label className={labelClasses}>Composition</label>
           <input
             type="text"
             value={data.composition}
@@ -164,7 +166,7 @@ export function DyeingForm({ data, onChange }: DyeingFormProps) {
       {/* Column 4 */}
       <div className="space-y-4">
         <div>
-          <label className="block text-sm font-medium text-foreground">Fabric Weight (kg)</label>
+          <label className={labelClasses}>Fabric Weight (kg)</label>
           <input
             type="number"
             value={data.fabricWeight ?? ''}
@@ -175,7 +177,7 @@ export function DyeingForm({ data, onChange }: DyeingFormProps) {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-foreground">Liquor Ratio</label>
+          <label className={labelClasses}>Liquor Ratio</label>
           <input
             type="number"
             value={data.liquorRatio ?? ''}
@@ -186,21 +188,21 @@ export function DyeingForm({ data, onChange }: DyeingFormProps) {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-foreground">Total Water</label>
+          <label className={labelClasses}>Total Water</label>
           <div className="mt-1 flex rounded-md shadow-sm">
             <input
               type="number"
               value={data.totalWater ?? ''}
               readOnly
-              className="block w-full rounded-l-md border-border bg-muted text-muted-foreground py-1 px-3"
+              className="block w-full rounded-l-lg border-2 border-gray-200 bg-gray-50 text-gray-600 py-2.5 px-4"
             />
-            <span className="inline-flex items-center px-3 rounded-r-md border border-l-0 border-border bg-muted text-muted-foreground sm:text-sm">
+            <span className="inline-flex items-center px-4 rounded-r-lg border-2 border-l-0 border-gray-200 bg-gray-50 text-gray-600 text-sm font-medium">
               L
             </span>
           </div>
         </div>
         <div>
-          <label className="block text-sm font-medium text-foreground">Work Order</label>
+          <label className={labelClasses}>Work Order</label>
           <input
             type="text"
             value={data.workOrder}
