@@ -28,8 +28,8 @@ export function DyeingForm({ data, onChange }: DyeingFormProps) {
   };
 
   // Common input classes
-  const inputClasses = "mt-1 block w-full rounded-lg border-2 border-gray-200 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 bg-white text-gray-900 py-2.5 px-4 transition-all duration-200 hover:border-gray-300";
-  const selectClasses = "mt-1 block w-full rounded-lg border-2 border-gray-200 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 bg-white text-gray-900 py-2.5 px-4 transition-all duration-200 hover:border-gray-300 appearance-none";
+  const inputClasses = "mt-1 block w-full rounded-lg border-2 border-gray-200 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 bg-white text-gray-900 py-1 px-2.5 transition-all duration-200 hover:border-gray-300";
+  const selectClasses = "mt-1 block w-full rounded-lg border-2 border-gray-200 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-200 bg-white text-gray-900 py-1 px-2.5 transition-all duration-200 hover:border-gray-300 appearance-none";
   const labelClasses = "block text-sm font-semibold text-gray-700 mb-1";
 
   return (
@@ -194,9 +194,9 @@ export function DyeingForm({ data, onChange }: DyeingFormProps) {
               type="number"
               value={data.totalWater ?? ''}
               readOnly
-              className="block w-full rounded-l-lg border-2 border-gray-200 bg-gray-50 text-gray-600 py-2.5 px-4"
+              className="block w-full rounded-l-lg border-2 border-gray-200 bg-gray-50 text-gray-600 py-1 px-2.5"
             />
-            <span className="inline-flex items-center px-4 rounded-r-lg border-2 border-l-0 border-gray-200 bg-gray-50 text-gray-600 text-sm font-medium">
+            <span className="inline-flex items-center px-2.5 rounded-r-lg border-2 border-l-0 border-gray-200 bg-gray-50 text-gray-600 text-sm font-medium">
               L
             </span>
           </div>

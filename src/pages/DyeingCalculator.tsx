@@ -121,6 +121,10 @@ export function DyeingCalculator() {
   const handlePrint = useReactToPrint({
     content: () => printRef.current,
     documentTitle: `ChemicalRequisition_${formData.reqId}`,
+    onAfterPrint: () => {
+      // Prevent any navigation after printing
+      console.log('Print completed');
+    },
   });
 
   const handleSaveRecipe = async (recipeName: string) => {

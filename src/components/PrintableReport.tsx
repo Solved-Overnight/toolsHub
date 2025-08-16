@@ -38,17 +38,8 @@ export const PrintableReport = React.forwardRef<HTMLDivElement, PrintableReportP
       <div ref={ref} className="p-8 bg-white text-black text-xs flex flex-col min-h-[1050px] relative">
         {/* Draft Banner */}
         {data.documentMode === 'draft' && (
-          <div className="absolute top-0 left-0 w-32 h-32 overflow-hidden z-10">
-            <div className="absolute top-6 -left-6 w-40 h-8 bg-orange-500 text-white text-center font-bold text-sm leading-8 transform -rotate-45 shadow-lg">
-              DRAFT
-            </div>
-          </div>
-        )}
-        
-        {/* Draft Banner */}
-        {data.documentMode === 'draft' && (
-          <div className="absolute top-0 left-0 w-32 h-32 overflow-hidden">
-            <div className="absolute top-6 -left-6 w-40 h-8 bg-orange-500 text-white text-center font-bold text-sm leading-8 transform -rotate-45 shadow-lg">
+          <div className="absolute top-0 left-0 w-36 h-36 overflow-hidden z-10">
+            <div className="absolute top-7 -left-7 w-48 h-8 bg-orange-500 text-white text-center font-bold text-sm leading-8 transform -rotate-45 shadow-lg">
               DRAFT
             </div>
           </div>
