@@ -239,7 +239,7 @@ export function DyeingCalculator() {
       if (loadedRecipeId) {
         setHasUnsavedChanges(true);
       }
-  }, []);
+  }, [loadedRecipeId]);
 
   // Track form changes
   useEffect(() => {
@@ -356,100 +356,6 @@ export function DyeingCalculator() {
                   </span>
                 </label>
               </div>
-            </div>
-          </div>
-
-          <DyeingForm data={formData} onChange={setFormData} />
-
-          <DragDropContext onDragEnd={handleOnDragEnd}>
-            <ChemicalItemsTable
-              items={chemicalItems}
-              totalWater={formData.totalWater}
-              fabricWeight={formData.fabricWeight}
-              onItemsChange={handleItemsChange}
-            />
-          </DragDropContext>
-
-          <div className="mt-8 flex flex-wrap justify-end gap-3">
-            <Button variant="outline" onClick={handleClear}>Clear Form</Button>
-            <Button onClick={handleSaveClick} className="bg-[#1A3636] hover:bg-green-900 text-white">
-              {loadedRecipeId && hasUnsavedChanges ? 'Save Changes' : 'Save Recipe'}
-            </Button>
-            <Button onClick={() => setIsViewRecipesOpen(true)} className="bg-[#1A3636] hover:bg-green-900 text-white flex items-center">
-              <FolderOpen className="h-5 w-5 mr-2" />
-              View Recipes
-            </Button>
-            <Button onClick={handlePrint} className="bg-[#FF9900] hover:bg-orange-500 text-white flex items-center">
-              <Printer className="h-5 w-5 mr-2" />
-              View/Print
-            </Button>
-          </div>
-        </div>
-      </div>
-
-      <div style={{ display: 'none' }}>
-        <PrintableReport ref={printRef} data={formData} chemicalItems={chemicalItems} />
-      </div>
-
-      <SaveRecipeDialog
-        isOpen={isSaveRecipeOpen}
-        onClose={() => setIsSaveRecipeOpen(false)}
-        onSave={handleSaveRecipe}
-        isSaving={isSaving}
-      />
-
-      <SaveOptionsDialog
-        isOpen={isSaveOptionsOpen}
-        onClose={() => setIsSaveOptionsOpen(false)}
-        onSaveAsNew={handleSaveAsNew}
-        onUpdateExisting={handleUpdateExisting}
-        isSaving={isSaving}
-        recipeName={formData.project}
-      />
-
-      <ViewRecipesDialog
-        isOpen={isViewRecipesOpen}
-        onClose={() => setIsViewRecipesOpen(false)}
-        onRetrieve={handleLoadRecipe}
-      />
-
-      {alertDialog && (
-        <AlertDialog
-          isOpen={alertDialog.isOpen}
-          onClose={() => setAlertDialog(null)}
-          title={alertDialog.title}
-          message={alertDialog.message}
-        />
-      )}
-    </div>
-  );
-}
-              <label className="inline-flex items-center cursor-pointer">
-                <input
-                  type="radio"
-                  className="sr-only"
-                  name="productMode"
-                  value="inhouse"
-                  checked={formData.productMode === 'inhouse'}
-                  onChange={(e) => setFormData({ ...formData, productMode: e.target.value as 'inhouse' | 'subcontract' })}
-                />
-                <span className={`px-4 py-1 text-sm rounded-md transition ${formData.productMode === 'inhouse' ? 'bg-card shadow-sm text-foreground font-semibold' : 'text-muted-foreground'}`}>
-                  Inhouse
-                </span>
-              </label>
-              <label className="inline-flex items-center cursor-pointer">
-                <input
-                  type="radio"
-                  className="sr-only"
-                  name="productMode"
-                  value="subcontract"
-                  checked={formData.productMode === 'subcontract'}
-                  onChange={(e) => setFormData({ ...formData, productMode: e.target.value as 'inhouse' | 'subcontract' })}
-                />
-                <span className={`px-4 py-1 text-sm rounded-md transition ${formData.productMode === 'subcontract' ? 'bg-card shadow-sm text-foreground font-semibold' : 'text-muted-foreground'}`}>
-                  Subcontract
-                </span>
-              </label>
             </div>
           </div>
 
