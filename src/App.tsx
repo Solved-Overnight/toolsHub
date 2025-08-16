@@ -6,7 +6,7 @@ import { DyeingCalculator } from './pages/DyeingCalculator';
 import { History } from './pages/History';
 import { ProformaInvoice } from './pages/ProformaInvoice';
 import { Settings } from './pages/Settings';
-import { SocialPortal } from './pages/SocialPortal';
+import SocialPortal from './pages/SocialPortal';
 import { AuthPage } from './pages/AuthPage'; // Import the new AuthPage
 import { Sidebar } from './components/Sidebar';
 import { auth } from './lib/firebaseConfig'; // Import auth
