@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Beaker, FileText, History, Book, BarChart2, Users, Layers, Settings, Clock, Lightbulb, Save, Printer } from 'lucide-react';
+import { Beaker, FileText, History, Book, BarChart2, Users, Layers, Settings, Clock, Lightbulb, Save, Printer, TrendingUp, HelpCircle, Heart, MessageCircle } from 'lucide-react';
 import { motion, useSpring, useTransform, MotionValue } from 'framer-motion';
 import { AnalyticsDashboard } from '../components/AnalyticsDashboard'; // Updated import
 
@@ -237,6 +237,67 @@ export function LandingPage() {
 
           {/* Recent Activity & Quick Tips Sidebar */}
           <div className="lg:col-span-1 flex flex-col space-y-6">
+            {/* Trending Posts from Social Portal */}
+            <div>
+              <motion.h2
+                className="text-2xl font-semibold text-foreground mb-4"
+                variants={itemVariants}
+              >
+                Trending in Community
+              </motion.h2>
+              <motion.div
+                className="space-y-3"
+                variants={containerVariants}
+              >
+                <motion.div variants={itemVariants}>
+                  <div className="bg-card p-4 rounded-lg border border-border hover:shadow-md transition-shadow">
+                    <div className="flex items-start gap-3">
+                      <div className="p-2 bg-orange-100 rounded-full">
+                        <TrendingUp className="h-4 w-4 text-orange-600" />
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="font-medium text-foreground text-sm">New Dyeing Method for Cotton</h4>
+                        <p className="text-xs text-muted-foreground mt-1">Sarah Chen shared a breakthrough technique...</p>
+                        <div className="flex items-center gap-4 mt-2 text-xs text-muted-foreground">
+                          <span className="flex items-center gap-1">
+                            <Heart className="h-3 w-3" />
+                            24
+                          </span>
+                          <span className="flex items-center gap-1">
+                            <MessageCircle className="h-3 w-3" />
+                            8
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+                <motion.div variants={itemVariants}>
+                  <div className="bg-card p-4 rounded-lg border border-border hover:shadow-md transition-shadow">
+                    <div className="flex items-start gap-3">
+                      <div className="p-2 bg-purple-100 rounded-full">
+                        <HelpCircle className="h-4 w-4 text-purple-600" />
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="font-medium text-foreground text-sm">Polyester Bleeding Issues?</h4>
+                        <p className="text-xs text-muted-foreground mt-1">Ahmed Rahman needs help with color bleeding...</p>
+                        <div className="flex items-center gap-4 mt-2 text-xs text-muted-foreground">
+                          <span className="flex items-center gap-1">
+                            <Heart className="h-3 w-3" />
+                            12
+                          </span>
+                          <span className="flex items-center gap-1">
+                            <MessageCircle className="h-3 w-3" />
+                            15
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              </motion.div>
+            </div>
+
             {/* Recent Activity */}
             <div>
               <motion.h2

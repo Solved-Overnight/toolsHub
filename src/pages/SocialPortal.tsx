@@ -15,7 +15,12 @@ import {
   Search,
   TrendingUp,
   Users,
-  BookOpen
+  BookOpen,
+  Award,
+  ThumbsUp,
+  Eye,
+  Bookmark,
+  Send
 } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
@@ -35,8 +40,22 @@ interface Post {
   likes: number;
   comments: number;
   isLiked: boolean;
+  isBookmarked: boolean;
+  views: number;
   tags: string[];
   image?: string;
+  replies?: Reply[];
+}
+
+interface Reply {
+  id: string;
+  author: {
+    name: string;
+    email: string;
+  };
+  content: string;
+  timestamp: string;
+  likes: number;
 }
 
 const mockPosts: Post[] = [
@@ -49,8 +68,11 @@ const mockPosts: Post[] = [
     likes: 24,
     comments: 8,
     isLiked: false,
+    isBookmarked: false,
+    views: 156,
     tags: ['cotton', 'reactive-dye', 'blue', 'pre-treatment'],
-    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop'
+    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop',
+    replies: []
   },
   {
     id: '2',
@@ -61,7 +83,10 @@ const mockPosts: Post[] = [
     likes: 12,
     comments: 15,
     isLiked: true,
-    tags: ['polyester', 'disperse-dye', 'color-bleeding', 'help-needed']
+    isBookmarked: true,
+    views: 89,
+    tags: ['polyester', 'disperse-dye', 'color-bleeding', 'help-needed'],
+    replies: []
   },
   {
     id: '3',
@@ -72,8 +97,11 @@ const mockPosts: Post[] = [
     likes: 31,
     comments: 6,
     isLiked: false,
-    tags: ['analytics', 'quality-control', 'production', 'improvement'],
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop'
+    isBookmarked: false,
+    views: 203,
+    tags: ['analytics', 'quality-control', 'production', 'improvement', 'trending'],
+    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop',
+    replies: []
   }
 ];
 
@@ -85,6 +113,9 @@ export function SocialPortal() {
   const [filterType, setFilterType] = useState<'all' | Post['type']>('all');
   const [user, setUser] = useState<any>(null);
   const [isCreatingPost, setIsCreatingPost] = useState(false);
+  const [expandedPost, setExpandedPost] = useState<string | null>(null);
+  const [replyContent, setReplyContent] = useState<{ [postId: string]: string }>({});
+  const [sortBy, setSortBy] = useState<'recent' | 'popular' | 'trending'>('recent');
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -99,6 +130,15 @@ export function SocialPortal() {
                          post.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
     const matchesFilter = filterType === 'all' || post.type === filterType;
     return matchesSearch && matchesFilter;
+  }).sort((a, b) => {
+    switch (sortBy) {
+      case 'popular':
+        return b.likes - a.likes;
+      case 'trending':
+        return (b.likes + b.comments + b.views) - (a.likes + a.comments + a.views);
+      default:
+        return new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime();
+    }
   });
 
   const handleCreatePost = () => {
@@ -116,6 +156,8 @@ export function SocialPortal() {
       likes: 0,
       comments: 0,
       isLiked: false,
+      isBookmarked: false,
+      views: 0,
       tags: []
     };
 
@@ -136,6 +178,42 @@ export function SocialPortal() {
     ));
   };
 
+  const handleBookmark = (postId: string) => {
+    setPosts(posts.map(post => 
+      post.id === postId 
+        ? { ...post, isBookmarked: !post.isBookmarked }
+        : post
+    ));
+  };
+
+  const handleReply = (postId: string) => {
+    const content = replyContent[postId];
+    if (!content?.trim()) return;
+
+    const newReply: Reply = {
+      id: Date.now().toString(),
+      author: {
+        name: user?.displayName || user?.email?.split('@')[0] || 'Anonymous',
+        email: user?.email || 'anonymous@example.com'
+      },
+      content: content.trim(),
+      timestamp: new Date().toISOString(),
+      likes: 0
+    };
+
+    setPosts(posts.map(post => 
+      post.id === postId 
+        ? { 
+            ...post, 
+            comments: post.comments + 1,
+            replies: [...(post.replies || []), newReply]
+          }
+        : post
+    ));
+
+    setReplyContent({ ...replyContent, [postId]: '' });
+  };
+
   const getPostTypeIcon = (type: Post['type']) => {
     switch (type) {
       case 'method': return BookOpen;
@@ -153,6 +231,15 @@ export function SocialPortal() {
       default: return 'bg-gray-100 text-gray-800';
     }
   };
+
+  const getTrendingPosts = () => {
+    return posts
+      .filter(post => post.tags.includes('trending') || post.likes > 20)
+      .sort((a, b) => (b.likes + b.comments + b.views) - (a.likes + a.comments + a.views))
+      .slice(0, 3);
+  };
+
+  const getTopQuestions = () => posts.filter(post => post.type === 'question').slice(0, 3);
 
   return (
     <div className="min-h-screen bg-background">
@@ -276,17 +363,30 @@ export function SocialPortal() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="flex flex-col sm:flex-row gap-4 mb-8"
+          className="flex flex-col gap-4 mb-8"
         >
-          <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-            <Input
-              type="text"
-              placeholder="Search posts, authors, or tags..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 bg-background border-border"
-            />
+          <div className="flex flex-col sm:flex-row gap-4">
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+              <Input
+                type="text"
+                placeholder="Search posts, authors, or tags..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10 bg-background border-border"
+              />
+            </div>
+            <div className="flex gap-2">
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value as 'recent' | 'popular' | 'trending')}
+                className="px-3 py-2 border border-border bg-background text-foreground rounded-md focus:ring-2 focus:ring-primary"
+              >
+                <option value="recent">Recent</option>
+                <option value="popular">Popular</option>
+                <option value="trending">Trending</option>
+              </select>
+            </div>
           </div>
           <div className="flex gap-2">
             {(['all', 'method', 'question', 'graph', 'general'] as const).map((type) => (
@@ -357,7 +457,9 @@ export function SocialPortal() {
                       {post.tags.map((tag, tagIndex) => (
                         <span
                           key={tagIndex}
-                          className="px-2 py-1 bg-muted text-muted-foreground text-xs rounded-full"
+                          className={`px-2 py-1 text-xs rounded-full ${
+                            tag === 'trending' ? 'bg-orange-100 text-orange-800' : 'bg-muted text-muted-foreground'
+                          }`}
                         >
                           #{tag}
                         </span>
@@ -367,6 +469,10 @@ export function SocialPortal() {
 
                   {/* Post Actions */}
                   <div className="flex items-center gap-6 pt-4 border-t border-border">
+                    <button className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <Eye className="h-4 w-4" />
+                      {post.views}
+                    </button>
                     <button
                       onClick={() => handleLike(post.id)}
                       className={`flex items-center gap-2 text-sm transition-colors ${
@@ -376,15 +482,82 @@ export function SocialPortal() {
                       <Heart className={`h-4 w-4 ${post.isLiked ? 'fill-current' : ''}`} />
                       {post.likes}
                     </button>
-                    <button className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors">
+                    <button 
+                      onClick={() => setExpandedPost(expandedPost === post.id ? null : post.id)}
+                      className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
+                    >
                       <MessageCircle className="h-4 w-4" />
                       {post.comments}
+                    </button>
+                    <button
+                      onClick={() => handleBookmark(post.id)}
+                      className={`flex items-center gap-2 text-sm transition-colors ${
+                        post.isBookmarked ? 'text-yellow-600' : 'text-muted-foreground hover:text-yellow-600'
+                      }`}
+                    >
+                      <Bookmark className={`h-4 w-4 ${post.isBookmarked ? 'fill-current' : ''}`} />
                     </button>
                     <button className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors">
                       <Share2 className="h-4 w-4" />
                       Share
                     </button>
                   </div>
+
+                  {/* Comments Section */}
+                  {expandedPost === post.id && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      className="mt-4 pt-4 border-t border-border"
+                    >
+                      {/* Existing Replies */}
+                      {post.replies && post.replies.length > 0 && (
+                        <div className="space-y-3 mb-4">
+                          {post.replies.map((reply) => (
+                            <div key={reply.id} className="flex gap-3 p-3 bg-muted/30 rounded-lg">
+                              <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
+                                <User className="h-4 w-4 text-primary" />
+                              </div>
+                              <div className="flex-1">
+                                <div className="flex items-center gap-2 mb-1">
+                                  <span className="font-medium text-foreground text-sm">{reply.author.name}</span>
+                                  <span className="text-xs text-muted-foreground">
+                                    {new Date(reply.timestamp).toLocaleDateString()}
+                                  </span>
+                                </div>
+                                <p className="text-sm text-foreground">{reply.content}</p>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+
+                      {/* Reply Input */}
+                      <div className="flex gap-3">
+                        <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
+                          <User className="h-4 w-4 text-primary" />
+                        </div>
+                        <div className="flex-1 flex gap-2">
+                          <input
+                            type="text"
+                            placeholder="Write a reply..."
+                            value={replyContent[post.id] || ''}
+                            onChange={(e) => setReplyContent({ ...replyContent, [post.id]: e.target.value })}
+                            className="flex-1 px-3 py-2 border border-border bg-background text-foreground rounded-md focus:ring-2 focus:ring-primary"
+                            onKeyPress={(e) => e.key === 'Enter' && handleReply(post.id)}
+                          />
+                          <Button
+                            onClick={() => handleReply(post.id)}
+                            size="sm"
+                            className="bg-primary hover:bg-primary/90"
+                          >
+                            <Send className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
                 </motion.div>
               );
             })}
@@ -407,4 +580,3 @@ export function SocialPortal() {
       </div>
     </div>
   );
-}

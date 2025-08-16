@@ -136,3 +136,10 @@ export interface Recipe {
   formData: DyeingFormData;
   chemicalItems: ChemicalItem[];
 }
+
+export interface Settings {
+  industryName: string;
+  theme: string;
+  currency: string;
+  dateFormat: string;
+}
