@@ -14,7 +14,7 @@ import { useReactToPrint } from 'react-to-print';
 import type { DyeingFormData, ChemicalItem, Settings, Recipe } from '../types';
 import { calculateTotalWater } from '../types';
 import { db, auth } from '../lib/firebaseConfig'; // Import Firebase db and auth
-import { collection, addDoc, deleteDoc, doc } from 'firebase/firestore'; // Import Firestore functions
+import { collection, addDoc, deleteDoc, doc, updateDoc } from 'firebase/firestore'; // Import Firestore functions
 import { onAuthStateChanged } from 'firebase/auth'; // Import onAuthStateChanged
 
 const generateReqId = () => {
@@ -197,15 +197,14 @@ export function DyeingCalculator() {
     
     setIsSaving(true);
     try {
-      const updatedRecipe: Recipe = {
-        id: loadedRecipeId,
+      // Update the existing document instead of creating a new one
+      await updateDoc(doc(db, "recipes", loadedRecipeId), {
         name: formData.project,
         timestamp: new Date().toISOString(),
         formData,
         chemicalItems
-      };
+      });
       
-      await addDoc(collection(db, "recipes"), updatedRecipe);
       setHasUnsavedChanges(false);
       setAlertDialog({
         isOpen: true,
