@@ -141,60 +141,6 @@ export const ViewRecipesDialog: React.FC<ViewRecipesDialogProps> = ({ isOpen, on
               onChange={(e) => setSearchTerm(e.target.value)}
               className="mb-4"
             />
-            <div className="max-h-[350px] overflow-y-auto pr-2">
-              {isLoading ? (
-                <div className="flex justify-center items-center h-[200px]">
-                  <Loader2 className="h-8 w-8 animate-spin text-gray-400" />
-                </div>
-              ) : filteredRecipes.length === 0 ? (
-                <p className="text-center text-gray-500 py-10">
-                  {searchTerm ? "No matching recipes found." : "No recipes saved yet."}
-                </p>
-              ) : (
-                <ul className="space-y-3">
-                  {filteredRecipes.map((recipe) => (
-                    <li
-                      key={recipe.id}
-                      className={`flex items-center justify-between p-4 border rounded-lg shadow-sm cursor-pointer transition-all duration-200 ease-in-out ${
-                        selectedRecipeId === recipe.id
-                          ? 'bg-blue-50 border-blue-500 ring-2 ring-blue-300'
-                          : 'bg-white hover:bg-gray-50 hover:border-gray-300'
-                      }`}
-                      onClick={() => setSelectedRecipeId(recipe.id)}
-                    >
-                      <div className="flex-grow">
-                        <p className="font-semibold text-lg text-gray-800">{recipe.formData.project || 'Untitled Recipe'}</p>
-                        <p className="text-sm text-gray-600 mt-1">
-                          Saved: {new Date(recipe.timestamp).toLocaleDateString()} at {new Date(recipe.timestamp).toLocaleTimeString()}
-                        </p>
-                        <p className="text-xs text-gray-500 mt-0.5">Recipe ID: {recipe.id}</p>
-                      </div>
-                      <Button
-                        variant="destructive"
-                        size="sm"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          confirmDelete(recipe.id);
-                        }}
-                        className="ml-4 shrink-0 w-[80px]"
-                        disabled={isDeletingId === recipe.id}
-                      >
-                        {isDeletingId === recipe.id ? (
-                          <Loader2 className="h-4 w-4 animate-spin" />
-                        ) : (
-                          'Delete'
-                        )}
-                      </Button>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
-          </div>
-          <DialogFooter>
-            <Button variant="outline" onClick={onClose}>Cancel</Button>
-            <Button onClick={handleRetrieveClick} disabled={!selectedRecipeId}>Retrieve</Button>
-          </DialogFooter>
         </DialogContent>
       </Dialog>
 

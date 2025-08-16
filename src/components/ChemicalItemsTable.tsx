@@ -169,7 +169,7 @@ export const ChemicalItemsTable: React.FC<ChemicalItemsTableProps> = ({
         </Button>
       </div>
       <div className="overflow-x-auto">
-        <table className="min-w-full border-collapse border border-slate-200 table-fixed"> {/* Added table-fixed */}
+        <table className="min-w-full border-collapse border border-border table-fixed bg-card text-card-foreground">
           <colgroup>
             <col style={{ width: '12%' }} /> {/* Item Type */}
             <col style={{ width: '25%' }} /> {/* Item Name - Further increased width */}
@@ -184,36 +184,36 @@ export const ChemicalItemsTable: React.FC<ChemicalItemsTableProps> = ({
             <col style={{ width: '8%' }} />  {/* Remarks - Reduced width */}
             <col style={{ width: '8%' }} />  {/* Actions - Reduced width */}
           </colgroup>
-          <thead className="bg-slate-50">
+          <thead className="bg-muted">
             <tr>
-              <th className="border border-slate-200 px-2 py-2 text-center text-xs font-medium text-slate-500 uppercase tracking-wider">Item Type</th>
+              <th className="border border-border px-2 py-2 text-center text-xs font-medium text-muted-foreground uppercase tracking-wider">Item Type</th>
               {/* Increased width implicitly via colgroup */}
-              <th className="border border-slate-200 px-2 py-2 text-center text-xs font-medium text-slate-500 uppercase tracking-wider">Item Name</th>
-              <th className="border border-slate-200 px-2 py-2 text-center text-xs font-medium text-slate-500 uppercase tracking-wider">Lot No</th>
+              <th className="border border-border px-2 py-2 text-center text-xs font-medium text-muted-foreground uppercase tracking-wider">Item Name</th>
+              <th className="border border-border px-2 py-2 text-center text-xs font-medium text-muted-foreground uppercase tracking-wider">Lot No</th>
               {/* Reduced padding */}
-              <th className="border border-slate-200 px-1 py-2 text-center text-xs font-medium text-slate-500 uppercase tracking-wider">Dosing (g/l)</th>
+              <th className="border border-border px-1 py-2 text-center text-xs font-medium text-muted-foreground uppercase tracking-wider">Dosing (g/l)</th>
               {/* Reduced padding */}
-              <th className="border border-slate-200 px-1 py-2 text-center text-xs font-medium text-slate-500 uppercase tracking-wider">Shade (%)</th>
-              <th colSpan={3} className="border border-slate-200 px-1 py-2 text-center text-xs font-medium text-slate-500 uppercase tracking-wider">
+              <th className="border border-border px-1 py-2 text-center text-xs font-medium text-muted-foreground uppercase tracking-wider">Shade (%)</th>
+              <th colSpan={3} className="border border-border px-1 py-2 text-center text-xs font-medium text-muted-foreground uppercase tracking-wider">
                 Quantity
                 <div className="grid grid-cols-3 gap-0 mt-0.5 text-[10px]">
-                  <div className="border border-slate-200 py-0.5">KG</div>
-                  <div className="border border-slate-200 py-0.5">GM</div>
-                  <div className="border border-slate-200 py-0.5">MG</div>
+                  <div className="border border-border py-0.5">KG</div>
+                  <div className="border border-border py-0.5">GM</div>
+                  <div className="border border-border py-0.5">MG</div>
                 </div>
               </th>
               {/* Reduced padding */}
-              <th className="border border-slate-200 px-1 py-2 text-center text-xs font-medium text-slate-500 uppercase tracking-wider">Unit Price</th>
+              <th className="border border-border px-1 py-2 text-center text-xs font-medium text-muted-foreground uppercase tracking-wider">Unit Price</th>
               {/* Reduced padding */}
-              <th className="border border-slate-200 px-1 py-2 text-center text-xs font-medium text-slate-500 uppercase tracking-wider">Costing</th>
-              <th className="border border-slate-200 px-2 py-2 text-center text-xs font-medium text-slate-500 uppercase tracking-wider">Remarks</th>
-              <th className="border border-slate-200 px-2 py-2 text-center text-xs font-medium text-slate-500 uppercase tracking-wider">Actions</th>
+              <th className="border border-border px-1 py-2 text-center text-xs font-medium text-muted-foreground uppercase tracking-wider">Costing</th>
+              <th className="border border-border px-2 py-2 text-center text-xs font-medium text-muted-foreground uppercase tracking-wider">Remarks</th>
+              <th className="border border-border px-2 py-2 text-center text-xs font-medium text-muted-foreground uppercase tracking-wider">Actions</th>
             </tr>
           </thead>
           <Droppable droppableId="chemicalItems">
             {(providedDroppable) => (
               <tbody
-                className="bg-white"
+                className="bg-card"
                 ref={providedDroppable.innerRef}
                 {...providedDroppable.droppableProps}
               >
@@ -230,11 +230,11 @@ export const ChemicalItemsTable: React.FC<ChemicalItemsTableProps> = ({
                         }}
                         className={`${item.highlight ? 'bg-yellow-100' : ''} ${snapshot.isDragging ? 'shadow-lg' : ''}`}
                       >
-                        <td className="border border-slate-200 px-2 py-1.5 whitespace-nowrap text-center">
+                        <td className="border border-border px-2 py-1.5 whitespace-nowrap text-center">
                           <select
                             value={item.itemType}
                             onChange={(e) => updateItem(index, 'itemType', e.target.value)}
-                            className="w-full border-0 bg-transparent focus:ring-0 p-0 text-center text-sm"
+                            className="w-full border-0 bg-transparent focus:ring-0 p-0 text-center text-sm text-foreground"
                           >
                             <option value="">Select Type</option>
                             {ITEM_TYPES.map(type => (
@@ -243,33 +243,33 @@ export const ChemicalItemsTable: React.FC<ChemicalItemsTableProps> = ({
                           </select>
                         </td>
                         {/* Increased width implicitly via colgroup */}
-                        <td className="border border-slate-200 px-2 py-1.5 whitespace-nowrap text-center">
+                        <td className="border border-border px-2 py-1.5 whitespace-nowrap text-center">
                           <input
                             type="text"
                             value={item.itemType === 'Dyeing step' ? '-------' : item.itemName}
                             onChange={(e) => updateItem(index, 'itemName', e.target.value)}
-                            className={`w-full border-0 bg-transparent focus:ring-0 p-0 text-center text-sm ${item.itemType === 'Dyeing step' ? 'text-gray-500' : ''}`}
+                            className={`w-full border-0 bg-transparent focus:ring-0 p-0 text-center text-sm ${item.itemType === 'Dyeing step' ? 'text-muted-foreground' : 'text-foreground'}`}
                             placeholder="Name"
                             readOnly={item.itemType === 'Dyeing step'}
                           />
                         </td>
-                        <td className="border border-slate-200 px-2 py-1.5 whitespace-nowrap text-center">
+                        <td className="border border-border px-2 py-1.5 whitespace-nowrap text-center">
                           <input
                             type="text"
                             value={item.itemType === 'Dyeing step' ? '-------' : item.lotNo}
                             onChange={(e) => updateItem(index, 'lotNo', e.target.value)}
-                            className={`w-full border-0 bg-transparent focus:ring-0 p-0 text-center text-sm ${item.itemType === 'Dyeing step' ? 'text-gray-500' : ''}`}
+                            className={`w-full border-0 bg-transparent focus:ring-0 p-0 text-center text-sm ${item.itemType === 'Dyeing step' ? 'text-muted-foreground' : 'text-foreground'}`}
                             placeholder="Lot #"
                             readOnly={item.itemType === 'Dyeing step'}
                           />
                         </td>
                         {/* Reduced padding */}
-                        <td className="border border-slate-200 px-1 py-1.5 whitespace-nowrap text-center">
+                        <td className="border border-border px-1 py-1.5 whitespace-nowrap text-center">
                           <input
                             type="number"
                             value={item.itemType === 'Dyeing step' ? '-------' : (item.dosing ?? '')}
                             onChange={(e) => updateItem(index, 'dosing', e.target.value)}
-                            className={`w-full border-0 bg-transparent focus:ring-0 p-0 text-center text-sm ${item.itemType === 'Dyeing step' ? 'text-gray-500' : ''}`}
+                            className={`w-full border-0 bg-transparent focus:ring-0 p-0 text-center text-sm ${item.itemType === 'Dyeing step' ? 'text-muted-foreground' : 'text-foreground'}`}
                             placeholder="g/l"
                             min="0"
                             step="any"
@@ -277,49 +277,49 @@ export const ChemicalItemsTable: React.FC<ChemicalItemsTableProps> = ({
                           />
                         </td>
                         {/* Reduced padding */}
-                        <td className="border border-slate-200 px-1 py-1.5 whitespace-nowrap text-center">
+                        <td className="border border-border px-1 py-1.5 whitespace-nowrap text-center">
                           <input
                             type="number"
                             value={item.itemType === 'Dyeing step' ? '-------' : (item.shade ?? '')}
                             onChange={(e) => updateItem(index, 'shade', e.target.value)}
-                            className={`w-full border-0 bg-transparent focus:ring-0 p-0 text-center text-sm ${item.itemType === 'Dyeing step' ? 'text-gray-500' : ''}`}
+                            className={`w-full border-0 bg-transparent focus:ring-0 p-0 text-center text-sm ${item.itemType === 'Dyeing step' ? 'text-muted-foreground' : 'text-foreground'}`}
                             placeholder="%"
                             min="0"
                             step="any"
                             disabled={item.itemType === 'Dyeing step' || (item.dosing !== null && item.dosing !== undefined && String(item.dosing).trim() !== '')}
                           />
                         </td>
-                        <td className="border border-slate-200 px-0.5 py-1.5 whitespace-nowrap text-center">
+                        <td className="border border-border px-0.5 py-1.5 whitespace-nowrap text-center">
                           <input
                             type="text"
                             value={item.itemType === 'Dyeing step' ? '-------' : (item.qty.kg !== null ? item.qty.kg.toFixed(0) : '')}
                             readOnly
-                            className={`w-full border-0 bg-transparent focus:ring-0 text-center p-0 text-sm ${item.itemType === 'Dyeing step' ? 'text-gray-500' : 'text-slate-500'}`}
+                            className={`w-full border-0 bg-transparent focus:ring-0 text-center p-0 text-sm ${item.itemType === 'Dyeing step' ? 'text-muted-foreground' : 'text-muted-foreground'}`}
                           />
                         </td>
-                        <td className="border border-slate-200 px-0.5 py-1.5 whitespace-nowrap text-center">
+                        <td className="border border-border px-0.5 py-1.5 whitespace-nowrap text-center">
                           <input
                             type="text"
                             value={item.itemType === 'Dyeing step' ? '-------' : (item.qty.gm !== null ? item.qty.gm.toFixed(0) : '')}
                             readOnly
-                            className={`w-full border-0 bg-transparent focus:ring-0 text-center p-0 text-sm ${item.itemType === 'Dyeing step' ? 'text-gray-500' : 'text-slate-500'}`}
+                            className={`w-full border-0 bg-transparent focus:ring-0 text-center p-0 text-sm ${item.itemType === 'Dyeing step' ? 'text-muted-foreground' : 'text-muted-foreground'}`}
                           />
                         </td>
-                        <td className="border border-slate-200 px-0.5 py-1.5 whitespace-nowrap text-center">
+                        <td className="border border-border px-0.5 py-1.5 whitespace-nowrap text-center">
                           <input
                             type="text"
                             value={item.itemType === 'Dyeing step' ? '-------' : (item.qty.mg !== null ? item.qty.mg.toFixed(0) : '')}
                             readOnly
-                            className={`w-full border-0 bg-transparent focus:ring-0 text-center p-0 text-sm ${item.itemType === 'Dyeing step' ? 'text-gray-500' : 'text-slate-500'}`}
+                            className={`w-full border-0 bg-transparent focus:ring-0 text-center p-0 text-sm ${item.itemType === 'Dyeing step' ? 'text-muted-foreground' : 'text-muted-foreground'}`}
                           />
                         </td>
                         {/* Reduced padding */}
-                        <td className="border border-slate-200 px-1 py-1.5 whitespace-nowrap text-center">
+                        <td className="border border-border px-1 py-1.5 whitespace-nowrap text-center">
                           <input
                             type="number"
                             value={item.itemType === 'Dyeing step' ? '-------' : (item.unitPrice ?? '')}
                             onChange={(e) => updateItem(index, 'unitPrice', e.target.value)}
-                            className={`w-full border-0 bg-transparent focus:ring-0 p-0 text-center text-sm ${item.itemType === 'Dyeing step' ? 'text-gray-500' : ''}`}
+                            className={`w-full border-0 bg-transparent focus:ring-0 p-0 text-center text-sm ${item.itemType === 'Dyeing step' ? 'text-muted-foreground' : 'text-foreground'}`}
                             placeholder="Price"
                             min="0"
                             step="any"
@@ -327,29 +327,29 @@ export const ChemicalItemsTable: React.FC<ChemicalItemsTableProps> = ({
                           />
                         </td>
                         {/* Reduced padding */}
-                        <td className="border border-slate-200 px-1 py-1.5 whitespace-nowrap text-center">
+                        <td className="border border-border px-1 py-1.5 whitespace-nowrap text-center">
                           <input
                             type="text"
                             value={item.itemType === 'Dyeing step' ? '-------' : item.costing.toFixed(2)}
                             readOnly
-                            className={`w-full border-0 bg-transparent focus:ring-0 text-center p-0 text-sm ${item.itemType === 'Dyeing step' ? 'text-gray-500' : 'text-slate-500'}`}
+                            className={`w-full border-0 bg-transparent focus:ring-0 text-center p-0 text-sm ${item.itemType === 'Dyeing step' ? 'text-muted-foreground' : 'text-muted-foreground'}`}
                           />
                         </td>
-                        <td className="border border-slate-200 px-2 py-1.5 whitespace-nowrap text-center">
+                        <td className="border border-border px-2 py-1.5 whitespace-nowrap text-center">
                           <input
                             type="text"
                             value={item.itemType === 'Dyeing step' ? '-------' : item.remarks}
                             onChange={(e) => updateItem(index, 'remarks', e.target.value)}
-                            className={`w-full border-0 bg-transparent focus:ring-0 p-0 text-center text-sm ${item.itemType === 'Dyeing step' ? 'text-gray-500' : ''}`}
+                            className={`w-full border-0 bg-transparent focus:ring-0 p-0 text-center text-sm ${item.itemType === 'Dyeing step' ? 'text-muted-foreground' : 'text-foreground'}`}
                             placeholder="Remarks"
                             readOnly={item.itemType === 'Dyeing step'}
                           />
                         </td>
-                        <td className="border border-slate-200 px-2 py-1.5 whitespace-nowrap text-center align-middle">
+                        <td className="border border-border px-2 py-1.5 whitespace-nowrap text-center align-middle">
                           <div className="flex items-center justify-center space-x-1"> {/* Reduced space */}
                             <div
                               {...providedDraggable.dragHandleProps}
-                              className="cursor-grab text-slate-400 hover:text-slate-600 p-0.5" /* Adjusted padding */
+                              className="cursor-grab text-muted-foreground hover:text-foreground p-0.5"
                               title="Drag to reorder"
                             >
                               <GripVertical className="h-4 w-4" />
@@ -381,20 +381,20 @@ export const ChemicalItemsTable: React.FC<ChemicalItemsTableProps> = ({
             )}
           </Droppable>
           {/* Updated Footer */}
-          <tfoot className="bg-slate-50">
+          <tfoot className="bg-muted">
             <tr>
               {/* Span columns before Unit Price (Item Type, Item Name, Lot No, Dosing, Shade, Qty KG, Qty GM, Qty MG) = 8 columns */}
-              <td colSpan={8} className="border border-slate-200 px-1 py-3"></td>
+              <td colSpan={8} className="border border-border px-1 py-3"></td>
               {/* Label under Unit Price - Changed text-right to text-center */}
-              <td className="border border-slate-200 px-1 py-3 text-center font-medium">
+              <td className="border border-border px-1 py-3 text-center font-medium text-foreground">
                 Total:
               </td>
               {/* Sum under Costing */}
-              <td className="border border-slate-200 px-1 py-3 font-medium text-center">
+              <td className="border border-border px-1 py-3 font-medium text-center text-foreground">
                 {items.reduce((sum, item) => sum + item.costing, 0).toFixed(2)}
               </td>
               {/* Span remaining columns (Remarks, Actions) = 2 columns */}
-              <td colSpan={2} className="border border-slate-200"></td>
+              <td colSpan={2} className="border border-border"></td>
             </tr>
           </tfoot>
         </table>

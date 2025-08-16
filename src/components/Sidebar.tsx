@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Beaker, History, FileText, Home, LogOut, ChevronLeft, ChevronRight, Settings, Book, Printer } from 'lucide-react';
+import { Beaker, History, FileText, Home, LogOut, ChevronLeft, ChevronRight, Settings, Book, Printer, Users } from 'lucide-react';
 import { Button } from './ui/button';
 import { motion } from 'framer-motion';
 import { auth } from '../lib/firebaseConfig';
@@ -30,6 +30,7 @@ export function Sidebar({ isCollapsed, onCollapse }: SidebarProps) {
     { name: 'Manage Recipes', icon: Book, path: '/manage-recipes' },
     { name: 'Generate Reports', icon: Printer, path: '/generate-reports' },
     { name: 'History', icon: History, path: '/history' },
+    { name: 'Social Portal', icon: Users, path: '/social-portal' },
     { name: 'Settings', icon: Settings, path: '/settings' },
   ];
 

@@ -223,6 +223,15 @@ export function LandingPage() {
                   color="green" // Changed from 'gray' to 'green'
                 />
               </motion.div>
+              <motion.div variants={itemVariants}>
+                <ActionCard
+                  icon={Users}
+                  title="Social Portal"
+                  description="Connect with textile professionals and share knowledge."
+                  path="/social-portal"
+                  color="teal"
+                />
+              </motion.div>
             </motion.div>
           </div>
 

@@ -1,6 +1,37 @@
 import { ChemicalItem } from './chemical';
 
 export interface DyeingFormData {
+  reqId: string;
+  reqDate: string;
+  project: string;
+  fabricType: string;
+  color: string;
+  colorMore: string;
+  labDipNo: string;
+  machineDesc: string;
+  machineNo: string;
+  remarks: string;
+  reelSpeed: string;
+  pumpSpeed: string;
+  cycleTime: string;
+  dyingType: string;
+  colorGroup: string;
+  lotNo: string;
+  gsm: string;
+  productMode: 'inhouse' | 'subcontract';
+  workOrder: string;
+  fabricQty: string;
+  buyer: string;
+  batchNo: string;
+  batchQty: string;
+  orderNo: string;
+  fabricWeight: number | null;
+  liquorRatio: number | null;
+  totalWater: number | null;
+  composition: string;
+}
+
+export interface OldDyeingFormData {
   project: string;
   fabricType: string;
   color: string;
@@ -48,6 +79,37 @@ export const calculateTotalWater = (fabricWeight: number | null, liquorRatio: nu
 };
 
 export const initialDyeingFormData: DyeingFormData = {
+  reqId: '',
+  reqDate: new Date().toISOString().split('T')[0],
+  project: '',
+  fabricType: '',
+  color: '',
+  colorMore: '',
+  labDipNo: '',
+  machineDesc: '',
+  machineNo: '',
+  remarks: '',
+  reelSpeed: '',
+  pumpSpeed: '',
+  cycleTime: '',
+  dyingType: '',
+  colorGroup: '',
+  lotNo: '',
+  gsm: '',
+  productMode: 'inhouse',
+  workOrder: '',
+  fabricQty: '',
+  buyer: '',
+  batchNo: '',
+  batchQty: '',
+  orderNo: '',
+  fabricWeight: null,
+  liquorRatio: null,
+  totalWater: null,
+  composition: ''
+};
+
+export const initialOldDyeingFormData: OldDyeingFormData = {
   project: '',
   fabricType: '',
   color: '',
@@ -70,6 +132,7 @@ export const initialDyeingFormData: DyeingFormData = {
 export interface Recipe {
   id: string;
   name: string;
-  data: DyeingFormData;
-  createdAt: string;
+  timestamp: string;
+  formData: DyeingFormData;
+  chemicalItems: ChemicalItem[];
 }

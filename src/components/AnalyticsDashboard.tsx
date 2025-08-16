@@ -24,13 +24,13 @@ const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 export function AnalyticsDashboard() {
   return (
     <motion.div
-      className="bg-white p-6 rounded-xl border border-gray-200 shadow-lg grid grid-cols-1 lg:grid-cols-2 gap-8"
+      className="bg-card text-card-foreground p-6 rounded-xl border border-border shadow-lg grid grid-cols-1 lg:grid-cols-2 gap-8"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.4, duration: 0.5 }}
     >
       <div>
-        <h3 className="text-lg font-semibold text-gray-800 mb-4">Monthly Batches Processed & Recipes Created</h3>
+        <h3 className="text-lg font-semibold text-foreground mb-4">Monthly Batches Processed & Recipes Created</h3>
         <div className="h-64">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart
@@ -42,9 +42,9 @@ export function AnalyticsDashboard() {
                 bottom: 5,
               }}
             >
-              <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
-              <XAxis dataKey="name" stroke="#888888" />
-              <YAxis stroke="#888888" />
+              <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+              <XAxis dataKey="name" stroke="hsl(var(--muted-foreground))" />
+              <YAxis stroke="hsl(var(--muted-foreground))" />
               <Tooltip
                 contentStyle={{
                   backgroundColor: 'hsl(var(--card))',
@@ -65,7 +65,7 @@ export function AnalyticsDashboard() {
       </div>
 
       <div>
-        <h3 className="text-lg font-semibold text-gray-800 mb-4">Fabric Type Distribution</h3>
+        <h3 className="text-lg font-semibold text-foreground mb-4">Fabric Type Distribution</h3>
         <div className="h-64 flex items-center justify-center">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>

@@ -9,6 +9,7 @@ import { SettingsDialog } from '../components/SettingsDialog';
 import { SaveRecipeDialog } from '../components/SaveRecipeDialog';
 import { ViewRecipesDialog } from '../components/ViewRecipesDialog';
 import { AlertDialog } from '../components/AlertDialog';
+import { SaveOptionsDialog } from '../components/SaveOptionsDialog';
 import { useReactToPrint } from 'react-to-print';
 import type { DyeingFormData, ChemicalItem, Settings, Recipe } from '../types';
 import { calculateTotalWater } from '../types';
@@ -71,10 +72,13 @@ export function DyeingCalculator() {
   const printRef = useRef<HTMLDivElement>(null);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isSaveRecipeOpen, setIsSaveRecipeOpen] = useState(false);
+  const [isSaveOptionsOpen, setIsSaveOptionsOpen] = useState(false);
   const [isViewRecipesOpen, setIsViewRecipesOpen] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [alertDialog, setAlertDialog] = useState<{ isOpen: boolean; title: string; message: string; } | null>(null);
   const [user, setUser] = useState<any>(null); // State to hold authenticated user
+  const [loadedRecipeId, setLoadedRecipeId] = useState<string | null>(null);
+  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
 
   const [settings, setSettings] = useState<Settings>({
     industryName: 'DyeCalc Industries',
@@ -165,6 +169,8 @@ export function DyeingCalculator() {
       reqDate: new Date().toISOString().split('T')[0],
     });
     setChemicalItems(recipe.chemicalItems);
+    setLoadedRecipeId(recipe.id);
+    setHasUnsavedChanges(false);
     setAlertDialog({
       isOpen: true,
       title: "Success",
@@ -172,17 +178,75 @@ export function DyeingCalculator() {
     });
   };
 
+  const handleSaveClick = () => {
+    if (loadedRecipeId && hasUnsavedChanges) {
+      setIsSaveOptionsOpen(true);
+    } else {
+      setIsSaveRecipeOpen(true);
+    }
+  };
+
+  const handleSaveAsNew = () => {
+    setLoadedRecipeId(null);
+    setIsSaveOptionsOpen(false);
+    setIsSaveRecipeOpen(true);
+  };
+
+  const handleUpdateExisting = async () => {
+    if (!loadedRecipeId) return;
+    
+    setIsSaving(true);
+    try {
+      const updatedRecipe: Recipe = {
+        id: loadedRecipeId,
+        name: formData.project,
+        timestamp: new Date().toISOString(),
+        formData,
+        chemicalItems
+      };
+      
+      await addDoc(collection(db, "recipes"), updatedRecipe);
+      setHasUnsavedChanges(false);
+      setAlertDialog({
+        isOpen: true,
+        title: "Success",
+        message: "Recipe updated successfully!",
+      });
+    } catch (error) {
+      console.error("Failed to update recipe:", error);
+      setAlertDialog({
+        isOpen: true,
+        title: "Error",
+        message: "Error updating recipe. Check console for details.",
+      });
+    } finally {
+      setIsSaving(false);
+      setIsSaveOptionsOpen(false);
+    }
+  };
   const handleClear = () => {
     setFormData({
         ...initialFormData,
         reqId: generateReqId()
     });
     setChemicalItems([{ ...initialChemicalItem }]);
+    setLoadedRecipeId(null);
+    setHasUnsavedChanges(false);
   };
 
   const handleItemsChange = useCallback((newItems: ChemicalItem[]) => {
       setChemicalItems(newItems);
+      if (loadedRecipeId) {
+        setHasUnsavedChanges(true);
+      }
   }, []);
+
+  // Track form changes
+  useEffect(() => {
+    if (loadedRecipeId) {
+      setHasUnsavedChanges(true);
+    }
+  }, [formData, loadedRecipeId]);
 
   const handleReorderItems = useCallback((startIndex: number, endIndex: number) => {
     console.log(`Reordering from index ${startIndex} to ${endIndex}`);
@@ -275,7 +339,9 @@ export function DyeingCalculator() {
 
           <div className="mt-8 flex flex-wrap justify-end gap-3">
             <Button variant="outline" onClick={handleClear}>Clear Form</Button>
-            <Button onClick={() => setIsSaveRecipeOpen(true)} className="bg-[#1A3636] hover:bg-green-900 text-white">Save Recipe</Button>
+            <Button onClick={handleSaveClick} className="bg-[#1A3636] hover:bg-green-900 text-white">
+              {loadedRecipeId && hasUnsavedChanges ? 'Save Changes' : 'Save Recipe'}
+            </Button>
             <Button onClick={() => setIsViewRecipesOpen(true)} className="bg-[#1A3636] hover:bg-green-900 text-white flex items-center">
               <FolderOpen className="h-5 w-5 mr-2" />
               View Recipes
@@ -297,6 +363,15 @@ export function DyeingCalculator() {
         onClose={() => setIsSaveRecipeOpen(false)}
         onSave={handleSaveRecipe}
         isSaving={isSaving}
+      />
+
+      <SaveOptionsDialog
+        isOpen={isSaveOptionsOpen}
+        onClose={() => setIsSaveOptionsOpen(false)}
+        onSaveAsNew={handleSaveAsNew}
+        onUpdateExisting={handleUpdateExisting}
+        isSaving={isSaving}
+        recipeName={formData.project}
       />
 
       <ViewRecipesDialog

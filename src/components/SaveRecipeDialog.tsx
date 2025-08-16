@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Save, Sparkles } from 'lucide-react';
+import { motion } from 'framer-motion';
 import {
   Dialog,
   DialogContent,
@@ -31,14 +32,30 @@ export const SaveRecipeDialog: React.FC<SaveRecipeDialogProps> = ({ isOpen, onCl
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[425px]">
+    <Dialog open={isOpen} onOpenChange={!isSaving ? onClose : undefined}>
+      <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>
-          <DialogTitle>Save Recipe Template</DialogTitle>
+          <DialogTitle className="flex items-center gap-2">
+            <motion.div
+              animate={{ rotate: isSaving ? 360 : 0 }}
+              transition={{ duration: 2, repeat: isSaving ? Infinity : 0, ease: "linear" }}
+            >
+              <Sparkles className="h-5 w-5 text-primary" />
+            </motion.div>
+            Save Recipe Template
+          </DialogTitle>
+          <DialogDescription>
+            Give your recipe a memorable name to easily find it later.
+          </DialogDescription>
         </DialogHeader>
-        <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <label htmlFor="recipeName" className="text-right">
+        
+        <motion.div 
+          className="grid gap-6 py-6"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <div className="space-y-2">
+            <label htmlFor="recipeName" className="text-sm font-medium text-foreground">
               Recipe Name
             </label>
             <input
@@ -48,16 +65,29 @@ export const SaveRecipeDialog: React.FC<SaveRecipeDialogProps> = ({ isOpen, onCl
                 setRecipeName(e.target.value);
                 if (error) setError(null);
               }}
-              className="col-span-3 border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-border bg-background text-foreground rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all"
               placeholder="e.g., Basic Cotton Dyeing"
+              disabled={isSaving}
             />
+            {error && (
+              <motion.p 
+                className="text-destructive text-sm"
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+              >
+                {error}
+              </motion.p>
+            )}
           </div>
-          {error && <p className="col-span-4 text-right text-red-500 text-sm">{error}</p>}
-        </div>
+        </motion.div>
+        
         <DialogFooter>
-          <Button variant="outline" onClick={onClose} disabled={isSaving}>Cancel</Button>
-          <Button onClick={handleSaveClick} disabled={isSaving}>
+          <Button variant="outline" onClick={onClose} disabled={isSaving}>
+            Cancel
+          </Button>
+          <Button onClick={handleSaveClick} disabled={isSaving} className="bg-primary hover:bg-primary/90">
             {isSaving && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            {!isSaving && <Save className="mr-2 h-4 w-4" />}
             {isSaving ? 'Saving...' : 'Save'}
           </Button>
         </DialogFooter>
