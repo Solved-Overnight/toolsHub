@@ -8,20 +8,31 @@ import { ProformaInvoice } from './pages/ProformaInvoice';
 import { Settings } from './pages/Settings';
 import { AuthPage } from './pages/AuthPage'; // Import the new AuthPage
 import { Sidebar } from './components/Sidebar';
-import './styles/themes.css';
 import { auth } from './lib/firebaseConfig'; // Import auth
 import { onAuthStateChanged } from 'firebase/auth'; // Import onAuthStateChanged
 
 function App() {
-  const [theme, setTheme] = useState('light');
   const [isCollapsed, setIsCollapsed] = useState(true);
   const [user, setUser] = useState<any>(null); // State to hold user object
   const [loading, setLoading] = useState(true); // State to manage loading of auth state
   const location = useLocation();
 
   useEffect(() => {
-    document.body.className = `theme-${theme}`;
-  }, [theme]);
+    // Load theme from localStorage and apply it
+    const savedSettings = localStorage.getItem('userSettings');
+    const settings = savedSettings ? JSON.parse(savedSettings) : { theme: 'light' };
+    document.body.className = `theme-${settings.theme}`;
+    
+    // Listen for storage changes to update theme across tabs
+    const handleStorageChange = () => {
+      const updatedSettings = localStorage.getItem('userSettings');
+      const newSettings = updatedSettings ? JSON.parse(updatedSettings) : { theme: 'light' };
+      document.body.className = `theme-${newSettings.theme}`;
+    };
+    
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, []);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {

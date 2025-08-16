@@ -213,17 +213,17 @@ export function DyeingCalculator() {
 
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
+        <div className="bg-card text-card-foreground rounded-lg shadow-sm p-6 border border-border">
           <div className="flex flex-wrap justify-between items-center mb-6 gap-4">
             <div>
-              <h2 className="text-2xl font-bold text-gray-800">Chemical Requisition (LAB)</h2>
-              <p className="text-sm text-gray-500">Create and manage dyeing recipes with precision.</p>
+              <h2 className="text-2xl font-bold text-foreground">Chemical Requisition (LAB)</h2>
+              <p className="text-sm text-muted-foreground">Create and manage dyeing recipes with precision.</p>
             </div>
             <div className="flex items-center space-x-6">
               <div className="flex items-center">
-                <span className="text-sm font-medium text-gray-600">Req ID:</span>
+                <span className="text-sm font-medium text-muted-foreground">Req ID:</span>
                 <span className="ml-2 text-lg font-mono font-medium text-blue-600 bg-blue-50 px-2 py-1 rounded">
                   {formData.reqId}
                 </span>
@@ -232,7 +232,7 @@ export function DyeingCalculator() {
           </div>
           
           <div className="flex justify-end mb-4">
-            <div className="flex space-x-4 p-1 bg-gray-100 rounded-lg">
+            <div className="flex space-x-4 p-1 bg-muted rounded-lg">
               <label className="inline-flex items-center cursor-pointer">
                 <input
                   type="radio"
@@ -242,7 +242,7 @@ export function DyeingCalculator() {
                   checked={formData.productMode === 'inhouse'}
                   onChange={(e) => setFormData({ ...formData, productMode: e.target.value as 'inhouse' | 'subcontract' })}
                 />
-                <span className={`px-4 py-1 text-sm rounded-md transition ${formData.productMode === 'inhouse' ? 'bg-white shadow-sm text-gray-800 font-semibold' : 'text-gray-600'}`}>
+                <span className={`px-4 py-1 text-sm rounded-md transition ${formData.productMode === 'inhouse' ? 'bg-card shadow-sm text-foreground font-semibold' : 'text-muted-foreground'}`}>
                   Inhouse
                 </span>
               </label>
@@ -255,7 +255,7 @@ export function DyeingCalculator() {
                   checked={formData.productMode === 'subcontract'}
                   onChange={(e) => setFormData({ ...formData, productMode: e.target.value as 'inhouse' | 'subcontract' })}
                 />
-                <span className={`px-4 py-1 text-sm rounded-md transition ${formData.productMode === 'subcontract' ? 'bg-white shadow-sm text-gray-800 font-semibold' : 'text-gray-600'}`}>
+                <span className={`px-4 py-1 text-sm rounded-md transition ${formData.productMode === 'subcontract' ? 'bg-card shadow-sm text-foreground font-semibold' : 'text-muted-foreground'}`}>
                   Subcontract
                 </span>
               </label>

@@ -74,7 +74,8 @@ export function Settings() {
       localStorage.setItem('userSettings', JSON.stringify(settings));
       
       // Apply theme change immediately
-      document.body.className = `theme-${settings.theme}`;
+      const currentTheme = settings.theme;
+      document.body.className = `theme-${currentTheme}`;
       
       setNotification({ type: 'success', message: 'Settings saved successfully!' });
       
@@ -106,10 +107,10 @@ export function Settings() {
       case 'company':
         return (
           <div className="space-y-6">
-            <h3 className="text-lg font-semibold text-gray-800">Company Information</h3>
+            <h3 className="text-lg font-semibold text-foreground">Company Information</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Company Name</label>
+                <label className="block text-sm font-medium text-foreground mb-2">Company Name</label>
                 <Input
                   value={settings.companyName}
                   onChange={(e) => handleInputChange('companyName', e.target.value)}
@@ -117,7 +118,7 @@ export function Settings() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Company Email</label>
+                <label className="block text-sm font-medium text-foreground mb-2">Company Email</label>
                 <Input
                   type="email"
                   value={settings.companyEmail}
@@ -126,9 +127,9 @@ export function Settings() {
                 />
               </div>
               <div className="md:col-span-2">
-                <label className="block text-sm font-medium text-gray-700 mb-2">Company Address</label>
+                <label className="block text-sm font-medium text-foreground mb-2">Company Address</label>
                 <textarea
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-border bg-background text-foreground rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   rows={3}
                   value={settings.companyAddress}
                   onChange={(e) => handleInputChange('companyAddress', e.target.value)}
@@ -136,7 +137,7 @@ export function Settings() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                <label className="block text-sm font-medium text-foreground mb-2">Phone Number</label>
                 <Input
                   value={settings.companyPhone}
                   onChange={(e) => handleInputChange('companyPhone', e.target.value)}
@@ -150,12 +151,12 @@ export function Settings() {
       case 'preferences':
         return (
           <div className="space-y-6">
-            <h3 className="text-lg font-semibold text-gray-800">User Preferences</h3>
+            <h3 className="text-lg font-semibold text-foreground">User Preferences</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Default Currency</label>
+                <label className="block text-sm font-medium text-foreground mb-2">Default Currency</label>
                 <select
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-border bg-background text-foreground rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   value={settings.defaultCurrency}
                   onChange={(e) => handleInputChange('defaultCurrency', e.target.value)}
                 >
@@ -167,9 +168,9 @@ export function Settings() {
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Date Format</label>
+                <label className="block text-sm font-medium text-foreground mb-2">Date Format</label>
                 <select
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-border bg-background text-foreground rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   value={settings.dateFormat}
                   onChange={(e) => handleInputChange('dateFormat', e.target.value)}
                 >
@@ -179,9 +180,9 @@ export function Settings() {
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Time Format</label>
+                <label className="block text-sm font-medium text-foreground mb-2">Time Format</label>
                 <select
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-border bg-background text-foreground rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   value={settings.timeFormat}
                   onChange={(e) => handleInputChange('timeFormat', e.target.value)}
                 >
@@ -190,9 +191,9 @@ export function Settings() {
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Language</label>
+                <label className="block text-sm font-medium text-foreground mb-2">Language</label>
                 <select
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-border bg-background text-foreground rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   value={settings.language}
                   onChange={(e) => handleInputChange('language', e.target.value)}
                 >
@@ -204,8 +205,8 @@ export function Settings() {
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <label className="text-sm font-medium text-gray-700">Auto Save</label>
-                  <p className="text-xs text-gray-500">Automatically save your work</p>
+                  <label className="text-sm font-medium text-foreground">Auto Save</label>
+                  <p className="text-xs text-muted-foreground">Automatically save your work</p>
                 </div>
                 <input
                   type="checkbox"
@@ -216,8 +217,8 @@ export function Settings() {
               </div>
               <div className="flex items-center justify-between">
                 <div>
-                  <label className="text-sm font-medium text-gray-700">Notifications</label>
-                  <p className="text-xs text-gray-500">Receive system notifications</p>
+                  <label className="text-sm font-medium text-foreground">Notifications</label>
+                  <p className="text-xs text-muted-foreground">Receive system notifications</p>
                 </div>
                 <input
                   type="checkbox"
@@ -233,9 +234,9 @@ export function Settings() {
       case 'appearance':
         return (
           <div className="space-y-6">
-            <h3 className="text-lg font-semibold text-gray-800">Appearance Settings</h3>
+            <h3 className="text-lg font-semibold text-foreground">Appearance Settings</h3>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Theme</label>
+              <label className="block text-sm font-medium text-foreground mb-2">Theme</label>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {['light', 'dark', 'dracula', 'github', 'monokai'].map((theme) => (
                   <div
@@ -243,16 +244,16 @@ export function Settings() {
                     className={`p-4 border-2 rounded-lg cursor-pointer transition-all ${
                       settings.theme === theme
                         ? 'border-blue-500 bg-blue-50'
-                        : 'border-gray-200 hover:border-gray-300'
+                        : 'border-border hover:border-muted-foreground'
                     }`}
                     onClick={() => handleInputChange('theme', theme)}
                   >
                     <div className="text-center">
                       <div className={`w-full h-8 rounded mb-2 ${
-                        theme === 'light' ? 'bg-white border' :
+                        theme === 'light' ? 'bg-white border border-gray-300' :
                         theme === 'dark' ? 'bg-gray-800' :
                         theme === 'dracula' ? 'bg-purple-900' :
-                        theme === 'github' ? 'bg-gray-100 border' :
+                        theme === 'github' ? 'bg-gray-100 border border-gray-300' :
                         'bg-gray-900'
                       }`}></div>
                       <span className="text-sm font-medium capitalize">{theme}</span>
@@ -267,12 +268,12 @@ export function Settings() {
       case 'printing':
         return (
           <div className="space-y-6">
-            <h3 className="text-lg font-semibold text-gray-800">Printing Settings</h3>
+            <h3 className="text-lg font-semibold text-foreground">Printing Settings</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Default Paper Size</label>
+                <label className="block text-sm font-medium text-foreground mb-2">Default Paper Size</label>
                 <select
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-border bg-background text-foreground rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   value={settings.defaultPaperSize}
                   onChange={(e) => handleInputChange('defaultPaperSize', e.target.value)}
                 >
@@ -286,8 +287,8 @@ export function Settings() {
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <label className="text-sm font-medium text-gray-700">Print Header Logo</label>
-                  <p className="text-xs text-gray-500">Include company logo in printed reports</p>
+                  <label className="text-sm font-medium text-foreground">Print Header Logo</label>
+                  <p className="text-xs text-muted-foreground">Include company logo in printed reports</p>
                 </div>
                 <input
                   type="checkbox"
@@ -298,8 +299,8 @@ export function Settings() {
               </div>
               <div className="flex items-center justify-between">
                 <div>
-                  <label className="text-sm font-medium text-gray-700">Print Company Details</label>
-                  <p className="text-xs text-gray-500">Include company information in reports</p>
+                  <label className="text-sm font-medium text-foreground">Print Company Details</label>
+                  <p className="text-xs text-muted-foreground">Include company information in reports</p>
                 </div>
                 <input
                   type="checkbox"
@@ -315,12 +316,12 @@ export function Settings() {
       case 'system':
         return (
           <div className="space-y-6">
-            <h3 className="text-lg font-semibold text-gray-800">System Settings</h3>
+            <h3 className="text-lg font-semibold text-foreground">System Settings</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Backup Frequency</label>
+                <label className="block text-sm font-medium text-foreground mb-2">Backup Frequency</label>
                 <select
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-border bg-background text-foreground rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   value={settings.backupFrequency}
                   onChange={(e) => handleInputChange('backupFrequency', e.target.value)}
                 >
@@ -331,9 +332,9 @@ export function Settings() {
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Data Retention</label>
+                <label className="block text-sm font-medium text-foreground mb-2">Data Retention</label>
                 <select
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-border bg-background text-foreground rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   value={settings.dataRetention}
                   onChange={(e) => handleInputChange('dataRetention', e.target.value)}
                 >
@@ -354,19 +355,19 @@ export function Settings() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white rounded-lg shadow-sm border border-gray-200"
+          className="bg-card text-card-foreground rounded-lg shadow-sm border border-border"
         >
           {/* Header */}
-          <div className="px-6 py-4 border-b border-gray-200">
+          <div className="px-6 py-4 border-b border-border">
             <div className="flex justify-between items-center">
               <div>
-                <h1 className="text-2xl font-bold text-gray-800">Settings</h1>
-                <p className="text-sm text-gray-500">Manage your application preferences and configuration</p>
+                <h1 className="text-2xl font-bold text-foreground">Settings</h1>
+                <p className="text-sm text-muted-foreground">Manage your application preferences and configuration</p>
               </div>
               <Button
                 onClick={handleSave}
@@ -396,7 +397,7 @@ export function Settings() {
 
           <div className="flex">
             {/* Sidebar */}
-            <div className="w-64 border-r border-gray-200 p-6">
+            <div className="w-64 border-r border-border p-6">
               <nav className="space-y-2">
                 {tabs.map((tab) => (
                   <button
@@ -405,7 +406,7 @@ export function Settings() {
                     className={`w-full flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors ${
                       activeTab === tab.id
                         ? 'bg-[#1A3636] text-white'
-                        : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+                        : 'text-muted-foreground hover:bg-muted hover:text-foreground'
                     }`}
                   >
                     <tab.icon className="h-5 w-5 mr-3" />
