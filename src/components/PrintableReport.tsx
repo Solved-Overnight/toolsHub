@@ -8,6 +8,13 @@ interface PrintableReportProps {
 
 export const PrintableReport = React.forwardRef<HTMLDivElement, PrintableReportProps>(
   ({ data, chemicalItems }, ref) => {
+    // Get settings from localStorage for dynamic company info
+    const savedSettings = localStorage.getItem('userSettings');
+    const settings = savedSettings ? JSON.parse(savedSettings) : null;
+    
+    const companyName = settings?.companyName || 'Lantabur Apparels Ltd. (Dyeing)';
+    const companyAddress = settings?.companyAddress || 'Kewa, Boherar chala, Gila Beraeed, Sreepur, Gazipur';
+    
     const totalCost = chemicalItems.reduce((sum, item) => sum + (item.costing ?? 0), 0);
 
     // Updated formatQty to use kg, gm, mg and work with the qty object
@@ -32,8 +39,8 @@ export const PrintableReport = React.forwardRef<HTMLDivElement, PrintableReportP
         <div className="flex-grow">
           {/* Header */}
           <div className="text-center mb-4">
-            <h1 className="text-xl font-bold">Lantabur Apparels Ltd. (Dyeing)</h1>
-            <p className="text-[10px] text-gray-600">Kewa, Boherar chala, Gila Beraeed, Sreepur, Gazipur</p>
+            <h1 className="text-xl font-bold">{companyName}</h1>
+            <p className="text-[10px] text-gray-600">{companyAddress}</p>
             <div className="inline-block mt-2">
               <h2 className="text-lg font-semibold bg-gray-300 rounded-md px-4 py-1">
                 Dyes & Chemicals Requisition Form

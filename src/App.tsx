@@ -5,6 +5,7 @@ import { LandingPage } from './pages/LandingPage';
 import { DyeingCalculator } from './pages/DyeingCalculator';
 import { History } from './pages/History';
 import { ProformaInvoice } from './pages/ProformaInvoice';
+import { Settings } from './pages/Settings';
 import { AuthPage } from './pages/AuthPage'; // Import the new AuthPage
 import { Sidebar } from './components/Sidebar';
 import './styles/themes.css';
@@ -78,6 +79,13 @@ function App() {
                   transition={{ duration: 0.3 }}
                   className="p-4"
                 ><ProformaInvoice /></motion.div>} />
+                <Route path="/settings" element={<motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.3 }}
+                  className="p-4"
+                ><Settings /></motion.div>} />
                 {/* Redirect any unknown paths to home if authenticated */}
                 <Route path="*" element={<Navigate to="/" replace />} />
               </>
